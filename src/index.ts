@@ -1,5 +1,5 @@
 import express = require('express');
-const calculateBmi = require('./bmiCalculator')
+import { calculateBmiWrapper } from './bmiCalculator';
 
 const app = express();
 
@@ -8,7 +8,7 @@ app.get('/hello', (_req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-  const bmiAnalysis = calculateBmi(req.query.height, req.query.weight)
+  const bmiAnalysis = calculateBmiWrapper(Number(req.query.height), Number(req.query.weight))
 
   if (bmiAnalysis.success) {
     res.status(201).json({

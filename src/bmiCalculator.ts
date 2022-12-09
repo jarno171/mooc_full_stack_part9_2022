@@ -21,7 +21,7 @@ const calculateBmi = (height: number, mass: number): string | number => {
   return 'overweight';
 }
 
-const calculateBmiWrapper = (height: number, weight: number) => {
+export const calculateBmiWrapper = (height: number, weight: number) => {
 
   try {
 
@@ -50,5 +50,3 @@ const calculateBmiWrapper = (height: number, weight: number) => {
     }
   }
 };
-
-module.exports = calculateBmiWrapper
