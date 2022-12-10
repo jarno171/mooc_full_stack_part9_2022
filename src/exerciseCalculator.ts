@@ -18,7 +18,7 @@ const calculateExercises = (exerciseHours: number[], targetAverage: number): Res
     } else {
       return { rating: 1, ratingDescription: ':\'-(' };
     }
-  }
+  };
 
   const average = exerciseHours.reduce( ( accumulator, currentValue ) => accumulator + currentValue, 0 ) / exerciseHours.length;
 
