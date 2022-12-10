@@ -1,7 +1,10 @@
 import express = require('express');
 import { calculateBmiWrapper } from './bmiCalculator';
+import { calculateExercisesWrapper } from './exerciseCalculator';
 
 const app = express();
+
+app.use(express.json());
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!!');
@@ -18,8 +21,21 @@ app.get('/bmi', (req, res) => {
     })
   } else {
     res.status(400).json({
-      bmi: bmiAnalysis.message
-    })
+      error: bmiAnalysis.message
+    });
+  }
+});
+
+app.post('/exercises', (req, res) => {
+  const exerciseAnalysis = calculateExercisesWrapper(req.body);
+  console.log(exerciseAnalysis);
+
+  if (exerciseAnalysis.success) {
+    res.status(201).json(exerciseAnalysis.results);
+  } else {
+    res.status(400).json({
+      error: exerciseAnalysis.message
+    });
   }
 });
 

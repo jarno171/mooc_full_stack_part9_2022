@@ -32,48 +32,66 @@ const calculateExercises = (exerciseHours: number[], targetAverage: number): Res
     ratingDescription: rating(average, targetAverage).ratingDescription,
     target: targetAverage,
     average: average
-  }
-}
+  };
+};
 
 interface input {
   targetAverage: number
   exerciseHours: number[];
 }
 
-const parseArgumentsArray = (args: Array<string>): input => {
-  if (args.length < 4) throw new Error('Not enough arguments');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const parseArgumentsArray = (args: any): input => {
+  if (!args) {
+    throw new Error('no arguments');
+  }
 
-  const targetAverage = Number(args[2]);
+  if (!args.daily_exercises || !args.target) {
+    throw new Error('some arguments missing');
+  }
+
+  const targetAverage = Number(args.target);
 
   if (isNaN(targetAverage)) {
     throw new Error('Provided target average is not a number!');
   }
 
-  let inputArray = []
+  let inputArray = [];
 
-  for (let i = 3; i < args.length; ++i) {
-    if (!isNaN(Number(args[i]))) {
-      inputArray.push(Number(args[i]))
-    } else {
-      throw new Error('Provided values for exercise hours were not numbers!');
+  if (!isNaN(Number(args.daily_exercises))) {
+    inputArray.push(Number(args.daily_exercises));
+  } else {
+    for (let i = 0; i < args.daily_exercises.length; ++i) {
+      if (!isNaN(Number(args.daily_exercises[i]))) {
+        inputArray.push(Number(args.daily_exercises[i]));
+      } else {
+        throw new Error('provided values for exercise hours were not numbers!');
+      }
     }
   }
 
   return {
     targetAverage: targetAverage,
     exerciseHours: inputArray
-  }
-}
+  };
+};
 
-try {
-  const inputArray = parseArgumentsArray(process.argv);
-  console.log(calculateExercises(inputArray.exerciseHours, inputArray.targetAverage))
-} catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const calculateExercisesWrapper = (args: any) => {
+  try {
+    const inputArray = parseArgumentsArray(args);
+    return  {
+      success: true,
+      results: calculateExercises(inputArray.exerciseHours, inputArray.targetAverage)
+    };
+  } catch (error: unknown) {
+    let errorMessage = ''
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return {
+      success: false,
+      message: errorMessage
+    };
   }
-  console.log(errorMessage);
-}
-
-//console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+};
