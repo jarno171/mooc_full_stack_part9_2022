@@ -21,3 +21,18 @@ content-type: application/json
   "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
   "target": "a"
 }
+
+###
+GET http://localhost:3001/api/patients
+
+###
+POST http://localhost:3001/api/patients HTTP/1.1 
+content-type: application/json
+
+{
+  "name": "Testinen testaaja",
+  "dateOfBirth": "43.23.2323 Galactic time",
+  "ssn": "123-456-789",
+  "gender": "android",
+  "occupation": "automatic tester" 
+}
