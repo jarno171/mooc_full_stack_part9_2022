@@ -31,8 +31,8 @@ content-type: application/json
 
 {
   "name": "Testinen testaaja",
-  "dateOfBirth": "43.23.2323 Galactic time",
+  "dateOfBirth": "2022-12-31",
   "ssn": "123-456-789",
-  "gender": "android",
+  "gender": "other",
   "occupation": "automatic tester" 
 }
