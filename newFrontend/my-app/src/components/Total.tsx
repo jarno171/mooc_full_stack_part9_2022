@@ -1,11 +1,11 @@
-import { Courses } from '../utils/interfaces'
+import { CoursePart } from '../utils/interfaces'
 
-const Total = ({ courseParts }: { courseParts: Courses }) => {
+const Total = ({ courseParts }: { courseParts: CoursePart[] }) => {
 
   return (
     <p>
       Number of exercises{" "}
-      {courseParts.courses.reduce((carry, part) => carry + part.exerciseCount, 0)}
+      {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
     </p>
   )
 }

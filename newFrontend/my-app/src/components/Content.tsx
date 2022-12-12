@@ -1,18 +1,13 @@
-import { Courses } from '../utils/interfaces'
+import { CoursePart } from '../utils/interfaces'
+import Part from './Part'
 
-const Content = ({ courseParts }: { courseParts: Courses }) => {
+const Content = ({ courseParts }: { courseParts: CoursePart[] }) => {
 
   return (
     <>
-      <p>
-        {courseParts.courses[0].name} {courseParts.courses[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts.courses[1].name} {courseParts.courses[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts.courses[2].name} {courseParts.courses[2].exerciseCount}
-      </p>
+      {courseParts.map((course) => (
+        < Part key={course.name} course={course} />
+      ))}
     </>
   )
 }
