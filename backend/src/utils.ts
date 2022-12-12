@@ -1,4 +1,4 @@
-import { NewPatientEntry } from './types';
+import { NewPatientEntry, Gender } from './types';
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -7,12 +7,6 @@ const isString = (text: unknown): text is string => {
 const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date));
 };
-
-export enum Gender {
-  OTHER = "other",
-  MALE = "male",
-  FEMALE = "female"
-}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isGender = (param: any): param is Gender => {
