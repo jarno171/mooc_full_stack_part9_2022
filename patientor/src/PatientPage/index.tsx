@@ -8,7 +8,7 @@ import { Patient } from "../types";
 
 import { apiBaseUrl } from "../constants";
 
-import { useStateValue } from "../state";
+import { useStateValue, addVisitedPatient } from "../state";
 
 const PatientPage = () => {
 
@@ -26,7 +26,7 @@ const PatientPage = () => {
           );
 
           setPatientInfo(patientInfo);
-          dispatch({ type: "ADD_VISITED_PATIENT", payload: patientInfo });
+          dispatch(addVisitedPatient(patientInfo));
         } catch (e) {
           console.error(e);
         }
