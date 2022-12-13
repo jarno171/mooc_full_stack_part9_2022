@@ -35,10 +35,6 @@ const PatientPage = () => {
 
   React.useEffect(() => {
 
-    if (!id) {
-      return;
-    }
-
     let currentVisitedPatient: Patient | undefined;
 
     if (!isEmpty(visitedPatients)) {
