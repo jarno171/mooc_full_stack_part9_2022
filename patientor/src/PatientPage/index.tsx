@@ -10,6 +10,8 @@ import { apiBaseUrl } from "../constants";
 
 import { useStateValue, addVisitedPatient } from "../state";
 
+import Entries from './Entries';
+
 const PatientPage = () => {
 
   const [{ visitedPatients }, dispatch] = useStateValue();
@@ -54,6 +56,8 @@ const PatientPage = () => {
         <h2>{patientInfo.name} ({patientInfo.gender})</h2>
         <p>ssn: {patientInfo.ssn}</p>
         <p>occupation: {patientInfo.occupation}</p>
+        <h3>entries</h3>
+        <Entries entries={patientInfo.entries} />
       </div>
     );
   } else {
