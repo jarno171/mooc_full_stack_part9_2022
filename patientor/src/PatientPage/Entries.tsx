@@ -1,6 +1,12 @@
 import { Entry } from '../types';
+import { useStateValue } from "../state";
 
 const Entries = ({ entries }: { entries: Entry[] }) => {
+  const [{ diagnoses },] = useStateValue();
+
+  // continue from here
+  console.log(diagnoses);
+
   return (
     <>
     {entries.map((entry) => (
