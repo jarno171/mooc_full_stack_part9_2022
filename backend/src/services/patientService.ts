@@ -1,24 +1,24 @@
-import patientData from '../../data/patients.json';
+import patientData from '../../data/patients';
 
-import { NewPatientEntry, NonSensitivePatientEntry, PatientEntry } from '../types';
+import { NewPatientEntry, NonSensitivePatientEntry, Patient } from '../types';
 
 import { v1 as uuid } from 'uuid';
 
-const patients: Array<PatientEntry> = patientData;
+const patients: Array<Patient> = patientData;
 
 const getNonSensitiveEntries = (): Array<NonSensitivePatientEntry> => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return patients.map(({ssn, ...keepProperties}) => keepProperties);
 };
 
-const findById = (id: string): PatientEntry | undefined => {
+const findById = (id: string): Patient | undefined => {
   const patient = patients.find(patient => patient.id === id);
   return patient;
 };
 
 const addPatient = (
   entry: NewPatientEntry
-): PatientEntry => {
+): Patient => {
   
   const newPatientEntry = {
     id: uuid(),
