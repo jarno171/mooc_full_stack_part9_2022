@@ -2,8 +2,6 @@ import React from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-import { isEmpty } from 'lodash';
-
 import { Patient } from "../types";
 
 import { apiBaseUrl } from "../constants";
@@ -14,7 +12,7 @@ import Entries from './Entries';
 
 const PatientPage = () => {
 
-  const [{ visitedPatients }, dispatch] = useStateValue();
+  const [{ patients, visitedPatients }, dispatch] = useStateValue();
 
   const [patientInfo, setPatientInfo] = React.useState<Patient | null>(null);
 
@@ -37,15 +35,13 @@ const PatientPage = () => {
 
   React.useEffect(() => {
 
-    let currentVisitedPatient: Patient | undefined;
+    const currentVisitedPatient = Object.values(patients).find((patient) => patient.id === id);
 
-    if (!isEmpty(visitedPatients)) {
-      currentVisitedPatient = Object.values(visitedPatients).find((patient) => patient.id === id);
-    }
+    const visited = visitedPatients.find((visitedId) => visitedId === id);
 
-    if (!currentVisitedPatient) {
+    if (!visited) {
       void fetchPatientInfo();
-    } else {
+    } else if (currentVisitedPatient) {
       setPatientInfo(currentVisitedPatient);
     }
   }, [id]);
