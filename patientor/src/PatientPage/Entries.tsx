@@ -4,8 +4,9 @@ import { useStateValue } from "../state";
 const Entries = ({ entries }: { entries: Entry[] }) => {
   const [{ diagnoses },] = useStateValue();
 
-  // continue from here
-  console.log(diagnoses);
+  const nameForDiagnosis = (code: string): string => {
+    return diagnoses[code].name;
+  };
 
   return (
     <>
@@ -15,7 +16,7 @@ const Entries = ({ entries }: { entries: Entry[] }) => {
         <ul>
           {entry.diagnosisCodes?.map((diagnosis) => (
             <li key={diagnosis}>
-              {diagnosis}
+              {diagnosis}: {nameForDiagnosis(diagnosis)}
             </li>
           ))}
         </ul>
