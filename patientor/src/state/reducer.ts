@@ -11,7 +11,7 @@ export type Action =
       payload: Patient;
     }
   | {
-      type: "ADD_VISITED_PATIENT";
+      type: "UPDATE_VISITED_PATIENT";
       payload: Patient;
     };
 
@@ -36,13 +36,14 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-    case "ADD_VISITED_PATIENT":
+    case "UPDATE_VISITED_PATIENT":
       return {
         ...state,
-        visitedPatients: {
-          ...state.visitedPatients,
+        patients: {
+          ...state.patients,
           [action.payload.id]: action.payload
-        }
+        },
+        visitedPatients: state.visitedPatients.concat(action.payload.id)
       };
     default:
       return state;
