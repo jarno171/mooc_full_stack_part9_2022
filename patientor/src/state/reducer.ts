@@ -47,7 +47,6 @@ export const reducer = (state: State, action: Action): State => {
           ...state.patients,
           [action.payload.id]: action.payload
         },
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         visitedPatients: state.visitedPatients.concat(action.payload.id)
       };
     case "SET_DIAGNOSIS_LIST":
