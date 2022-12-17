@@ -118,8 +118,8 @@ const isHealthCheckRating = (param: any): param is HealthCheckRating => {
   return Object.values(HealthCheckRating).includes(param);
 };
 
-const parseDiagnosisCodes = (diagnosisCodes: unknown): Array<string> => {
-  if (!diagnosisCodes || !isStringArray(diagnosisCodes)) {
+const parseDiagnosisCodes = (diagnosisCodes: unknown): Array<string> | undefined => {
+  if ((!diagnosisCodes || !isStringArray(diagnosisCodes)) && !(diagnosisCodes === undefined)) {
     throw new Error('Incorrect or missing string array of diagnosis codes');
   }
 
