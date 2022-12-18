@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Patient } from "../types";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Patient, Entry } from "../types";
 import { apiBaseUrl } from "../constants";
 import { useStateValue, addVisitedPatient } from "../state";
 import Entries from './Entries';
@@ -27,15 +28,21 @@ const PatientPage = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
   const submitNewEntry = async (values: EntryFormValues) => {
+    if (!id) {
+      return;
+    }
+
     try {
-      console.log(values);
-      /*
-      const { data: newPatient } = await axios.post<Patient>(
-        `${apiBaseUrl}/patients`,
+      const { data: newEntry } = await axios.post<Entry>(
+        `${apiBaseUrl}/patients/${id}/entries`,
         values
       );
-      dispatch(addPatient(newPatient));
-      */
+
+      const patientToAddEntry: Patient = patients[id];
+      patientToAddEntry.entries.push(newEntry);
+
+      setPatientInfo(patientToAddEntry);
+      dispatch(addVisitedPatient(patientToAddEntry));
       closeModal();
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {

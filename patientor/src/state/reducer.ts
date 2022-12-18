@@ -47,7 +47,9 @@ export const reducer = (state: State, action: Action): State => {
           ...state.patients,
           [action.payload.id]: action.payload
         },
-        visitedPatients: state.visitedPatients.concat(action.payload.id)
+        visitedPatients: !state.visitedPatients.find((id) => id === action.payload.id)
+        ? state.visitedPatients.concat(action.payload.id)
+        : state.visitedPatients
       };
     case "SET_DIAGNOSIS_LIST":
       return {
