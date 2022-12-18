@@ -1,4 +1,15 @@
-import { NewPatient, Gender, NewEntry, NewBaseEntry, EntryType, HealthCheckRating, Discharge, SickLeave } from './types';
+import { 
+  NewPatient,
+  Gender,
+  NewEntry,
+  NewBaseEntry, 
+  HealthCheckRating, 
+  Discharge, 
+  SickLeave, 
+  HealthCheckEntryType,
+  HospitalEntryType,
+  OccupationalHealthcareEntryType
+} from './types';
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -84,20 +95,40 @@ const parseSpecialist = (specialist: unknown): string => {
   return specialist;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isType = (param: any): param is string => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  return Object.values(EntryType).includes(param);
+const isHealthCheckEntryType = (text: unknown): text is HealthCheckEntryType => {
+  return text === "HealthCheck";
 };
 
-const parseType = (type: unknown): EntryType => {
-  if (!type || !isType(type)) {
+const isHospitalEntryType = (text: unknown): text is HospitalEntryType => {
+  return text === "Hospital";
+};
+
+const isOccupationalHealthcareEntryType = (text: unknown): text is OccupationalHealthcareEntryType => {
+  return text === "OccupationalHealthcare";
+};
+
+const parseHealthCheckType = (type: unknown): HealthCheckEntryType => {
+  if (!type || !isHealthCheckEntryType(type)) {
     throw new Error('Incorrect or missing type');
   }
 
-  const castedType: EntryType = type as EntryType
+  return type;
+};
 
-  return castedType;
+const parseHospitalEntryType = (type: unknown): HospitalEntryType => {
+  if (!type || !isHospitalEntryType(type)) {
+    throw new Error('Incorrect or missing type');
+  }
+
+  return type;
+};
+
+const parseOccupationalHealthcareEntryType = (type: unknown): OccupationalHealthcareEntryType => {
+  if (!type || !isOccupationalHealthcareEntryType(type)) {
+    throw new Error('Incorrect or missing type');
+  }
+
+  return type;
 };
 
 // https://stackoverflow.com/questions/49813443/type-guards-for-types-of-arrays
@@ -240,7 +271,7 @@ const parseHealthCheckEntry = ({
   healthCheckRating
 }: HealthCheckFields) => {
   return {
-    type: parseType(type),
+    type: parseHealthCheckType(type),
     healthCheckRating: parseHealthCheckRating(healthCheckRating)
   };
 };
@@ -250,7 +281,7 @@ const parseHospitalEntry = ({
   discharge
 }: HospitalFields) => {
   return {
-    type: parseType(type),
+    type: parseHospitalEntryType(type),
     discharge: parseDischarge(discharge)
   };
 };
@@ -261,7 +292,7 @@ const parseOccupationalHealthcareEntry = ({
   sickLeave
 }: OccupationalHealthcareFields) => {
   return {
-    type: parseType(type),
+    type: parseOccupationalHealthcareEntryType(type),
     employerName: parseEmployerName(employerName),
     sickLeave: parseSickLeave(sickLeave)
   };
